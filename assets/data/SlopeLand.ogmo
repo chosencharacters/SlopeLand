@@ -1,0 +1,34 @@
+{
+  "name": "Slope Land",
+  "ogmoVersion": "3.3.0",
+  "levelPaths": ["."],
+  "backgroundColor": "#282c34ff",
+  "gridColor": "#3c4049cc",
+  "anglesRadians": true,
+  "directoryDepth": 5,
+  "layerGridDefaultSize": {"x": 16, "y": 16},
+  "levelDefaultSize": {"x": 320, "y": 240},
+  "levelMinSize": {"x": 320, "y": 192},
+  "levelMaxSize": {"x": 320, "y": 192},
+  "levelValues": [],
+  "defaultExportMode": ".json",
+  "compactExport": false,
+  "externalScript": "",
+  "playCommand": "",
+  "entityTags": [],
+  "layers": [
+    {
+      "definition": "tile",
+      "name": "tiles",
+      "gridSize": {"x": 16, "y": 16},
+      "exportID": "27051979",
+      "exportMode": 0,
+      "arrayMode": 0,
+      "defaultTileset": "collision"
+    }
+  ],
+  "entities": [],
+  "tilesets": [
+    {"label": "collision", "path": "../images/collision.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAAAQCAYAAADpunr5AAAAAXNSR0IArs4c6QAAALpJREFUWIXV2EsOwCAIBFDo/e9sV01MY606fAbWFZJ56Q8VsJpIQ86riKKzLXpk1ZU5HKk+OCREBA8tFdGSAKPAqyE8M8sBzIKugtDPKgWwEjA7wntGGYCdYFkRRr1LAJwEyobw1ZMeAAmSBWHWixrA4hs9G+GvBy2A5Q9SFsLKWUoAj7/TaITVM3QAnquBKISda6kAIvYy3gi7dwsNQORSzAvh5FFFAZCxkbRGOH1Zw59Z2etctLLX4TeWQkIdjUNbMQAAAABJRU5ErkJggg==", "tileWidth": 16, "tileHeight": 16, "tileSeparationX": 0, "tileSeparationY": 0}
+  ]
+}
