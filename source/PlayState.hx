@@ -6,27 +6,29 @@ import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.addons.tile.FlxTilemapExt;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
+import flixel.math.FlxPoint;
+import zero.flixel.utilities.Dolly;
 
 class PlayState extends FlxState
 {
 	var slopeBoy:FlxSprite;
 	var slopeWorld:FlxTilemapExt;
+	var dolly:Dolly;
 	
 	var speed:Int = 150;
 	
 	override public function create():Void
 	{
-		createSlopeBoy();
 		createSlopeWorld();
+		createSlopeBoy();
+		addDolly();
 		super.create();
 	}
 	
 	function createSlopeBoy(){
-		slopeBoy = new FlxSprite(0, 0);
+		slopeBoy = new FlxSprite(0, slopeWorld.y + slopeWorld.height - 32 - 23);
 		slopeBoy.makeGraphic(19, 23);
 		slopeBoy.acceleration.y = 400;
-		// slopeBoy.maxVelocity.y = 400;
-		// slopeBoy.maxVelocity.x = 200;
 		slopeBoy.maxVelocity.set(200, 400);
 		slopeBoy.drag.x = slopeBoy.maxVelocity.x /4;
 		add(slopeBoy);
@@ -36,7 +38,10 @@ class PlayState extends FlxState
 		var loader:FlxOgmo3LoaderExt = new FlxOgmo3LoaderExt("assets/data/SlopeLand.ogmo", "assets/data/SlopeWorld.json");
 		slopeWorld = loader.loadTilemapExt(AssetPaths.collision__png, "tiles");
 		slopeWorld.setSlopes([2], [3], [4], [5]);
-		slopeWorld.setGlue(true);
+		slopeWorld.setDownwardsGlue(true);
+		
+		FlxG.worldBounds.set(slopeWorld.width, slopeWorld.height);
+		
 		add(slopeWorld);
 	}
 
@@ -62,5 +67,34 @@ class PlayState extends FlxState
 			slopeBoy.velocity.y = -235;
 		}
 		slopeBoy.velocity.x *= 0.95;
+	}
+	
+	function addDolly(){
+		var startDollyPos:FlxPoint;
+		var introStarted:Bool = false;
+		
+		var scrollAdjust:Int = 0;
+		
+		//<DOLLY SET>
+		if (dolly == null){
+			var maxDelta:Float = 3;
+			var lerp:Float = 0.5;
+			
+			var forwardFocusOffset:Float = 32;
+			/***Note - Higher Number = Farther From the Ground***/
+			var platformOffset:Int = 32;
+			
+			dolly = new Dolly({
+				target:slopeBoy, 
+				lerp: {x:0.075, y:0.75} //formerly 0.1 0.1 changed on 5/20/2020
+			});
+			
+			dolly.add_component(new WindowConstraint({width: FlxG.width * 0.25, height: FlxG.height * 0.6})); //.75 -> .5 -> .25
+			dolly.add_component(new ForwardFocus({ offset: forwardFocusOffset, threshold:  48})); //48 //80
+			dolly.add_component(new PlatformSnap({ offset: platformOffset }));
+			
+			add(dolly);
+			FlxG.camera.follow(dolly);
+		}
 	}
 }
