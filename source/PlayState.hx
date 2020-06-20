@@ -52,6 +52,7 @@ class PlayState extends FlxState
 		super.update(elapsed);
 	}
 	
+	var crouch_timer = 0;
 	function controlSlopeBoy(){
 		if (FlxG.keys.anyPressed(["RIGHT", "D"])){
 			slopeBoy.velocity.x += speed / 10;
@@ -67,6 +68,14 @@ class PlayState extends FlxState
 			slopeBoy.velocity.y = -235;
 		}
 		slopeBoy.velocity.x *= 0.95;
+
+		if (FlxG.keys.anyPressed(['DOWN', 'S']) && slopeBoy.isTouching(FlxObject.FLOOR)) {
+			FlxG.camera.targetOffset.y += ((crouch_timer-- > 0 ? 0 : 64) - FlxG.camera.targetOffset.y) * 0.1;
+		}
+		else {
+			crouch_timer = 30;
+			FlxG.camera.targetOffset.y += (0 - FlxG.camera.targetOffset.y) * 0.1;
+		}
 
 		if (FlxG.keys.justPressed.T) teleport(80, 185);
 	}
