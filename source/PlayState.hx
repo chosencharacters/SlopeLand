@@ -67,6 +67,8 @@ class PlayState extends FlxState
 			slopeBoy.velocity.y = -235;
 		}
 		slopeBoy.velocity.x *= 0.95;
+
+		if (FlxG.keys.justPressed.T) teleport(80, 185);
 	}
 	
 	function addDolly(){
@@ -85,16 +87,21 @@ class PlayState extends FlxState
 			var platformOffset:Int = 32;
 			
 			dolly = new Dolly({
-				target:slopeBoy, 
+				target:slopeBoy,
 				lerp: {x:0.075, y:0.75} //formerly 0.1 0.1 changed on 5/20/2020
 			});
 			
 			dolly.add_component(new WindowConstraint({width: FlxG.width * 0.25, height: FlxG.height * 0.6})); //.75 -> .5 -> .25
 			dolly.add_component(new ForwardFocus({ offset: forwardFocusOffset, threshold:  48})); //48 //80
-			dolly.add_component(new PlatformSnap({ offset: platformOffset }));
+			dolly.add_component(new PlatformSnap({ offset: platformOffset, lerp: 0.1, max_speed: 100 }));
 			
 			add(dolly);
 			FlxG.camera.follow(dolly);
 		}
+	}
+
+	function teleport(x:Float, y:Float) {
+		slopeBoy.setPosition(x, y);
+		dolly.set_target(slopeBoy, true);
 	}
 }
