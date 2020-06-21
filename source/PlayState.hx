@@ -1,5 +1,6 @@
 package;
 
+import flixel.math.FlxRect;
 import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.FlxSprite;
@@ -100,7 +101,7 @@ class PlayState extends FlxState
 				lerp: {x:0.075, y:0.75} //formerly 0.1 0.1 changed on 5/20/2020
 			});
 			
-			dolly.add_component(new BoundsOverride({ rects: [new AreaRect(0, FlxG.height/2 + 8, FlxG.width * 2, FlxG.height)], tilemap: slopeWorld }));
+			dolly.add_component(new BoundsOverride({ rects: [new AreaRect(0, FlxG.height/2 + 8, FlxG.width * 2, FlxG.height)], bounds: FlxRect.get(slopeWorld.x, slopeWorld.y, slopeWorld.width, slopeWorld.height) }));
 			dolly.add_component(new WindowConstraint({width: FlxG.width * 0.25, height: FlxG.height * 0.6})); //.75 -> .5 -> .25
 			dolly.add_component(new ForwardFocus({ offset: forwardFocusOffset, threshold:  48})); //48 //80
 			dolly.add_component(new PlatformSnap({ offset: platformOffset, lerp: 0.1, max_speed: 100 }));
